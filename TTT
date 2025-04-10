@@ -1,0 +1,79 @@
+#include<iostream>
+using namespace std;
+
+void printboard(const char board[3][3]);
+void playerturn(char board[3][3], char player);
+bool checkwin(const char board[3][3]);
+
+int main() {
+	char board[3][3] = { {'-', '-', '-'}, {'-', '-', '-'}, {'-', '-', '-'} };
+	char player = 'X';//keeps track of who turn it is
+	bool endgame = false; //runs the game loop
+
+	while (endgame == false) {
+
+		printboard(board);
+		playerturn(board, player);
+		checkWin(board);
+
+		cout << "Player " << player << "'s turn!" << endl << endl;
+
+		if (player == 'X')// if player is x change to y
+			player = 'Y';
+
+		else if (player == 'Y')// if player is y change to x
+			player = 'X';
+	}
+}
+
+void printboard(const char board[3][3]) {
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			cout << board[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+
+
+}
+void playerturn(char board[3][3], char player) {
+
+	int row;
+	int col;
+
+	if (player == 'X')
+		cout << "PLayer X, type row and column to place X:" << endl;
+	else
+		cout << "PLayer Y, type row and column to place O:" << endl;
+
+	cin >> row;
+	cin >> col;
+
+	if (player == 'X')
+		board[row - 1][col - 1] = 'X';
+	else
+		board[row - 1][col - 1] = 'O';
+
+	cout << endl;
+}
+bool checkWin(const char board[3][3]) {
+
+
+	for (int i = 0; i < 3; i++) {
+
+		if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != '-')
+			return true;
+
+		if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != '-')
+			return true;
+
+	}
+
+	if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != '-')
+		return true;
+	if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != '-')
+		return true;
+
+	return false;
+}
